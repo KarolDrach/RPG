@@ -21,6 +21,7 @@ void HideCursor();
 void ClearScreenFromXY(int start_x, int start_y, int width, int height);
 int CalculateNewLevelExp(int level);
 bool DisplayYesNoMenu(int x, int y, std::string question);
+int DisplayListMenu(int x, int y, std::vector<std::string> option_list, int default_selected = 1);
 
 // Colors for ChangeColor() function																				
 //0 - czarny			-  black

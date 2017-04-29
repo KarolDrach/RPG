@@ -42,11 +42,11 @@ bool DisplayYesNoMenu(int x, int y, string question)
 
 		gotoxy(x + 5, y + 4);
 		if (selection) ChangeColor(74);
-		cout << "Tak";
+			cout << "Tak";
 		ChangeColor(15);
 		cout << "         ";
 		if (!selection) ChangeColor(74);
-		cout << "Nie";
+			cout << "Nie";
 		ChangeColor(15);
 
 		switch (_getch())
@@ -64,6 +64,53 @@ bool DisplayYesNoMenu(int x, int y, string question)
 		return true;
 	else
 		return false;
+}
+
+int DisplayListMenu(int x, int y, vector<string> option_list, int default_selected)
+{
+	bool close_menu = false;
+	int selected = default_selected;
+	
+	while (!close_menu)
+	{
+		gotoxy(x, y);
+		ChangeColor(15);
+		int actual_line = 1;
+		for (vector<string>::iterator i = option_list.begin(); i != option_list.end(); i++)
+		{
+			gotoxy(x, y + actual_line - 1);
+			if (actual_line == selected)
+				ChangeColor(112);
+
+			cout << *i;
+			actual_line++;
+			ChangeColor(15);
+		}
+
+		switch (_getch())
+		{
+			case 72:  // ARROW UP
+			{
+				if (selected - 1 > 0)
+					selected--;
+				break;
+			}
+			case 80:  // ARROW DOWN
+			{
+				if (selected < option_list.size())
+					selected++;
+				break;
+			}
+			case 27:  // ESC
+			{
+				return -999;	// returning that number means closing menu with no option selected
+			}
+			case 13:  // ENTER
+			{
+				return selected;
+			}
+		}
+	}
 }
 
 void gotoxy(const int x, const int y)

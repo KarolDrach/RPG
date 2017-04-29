@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 #include <conio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -73,7 +74,7 @@ void Hero::DrawHpManaBar(int map_height)
 		cout << " ";
 
 	ChangeColor(7);
-	cout << "     Zdrowie:       " << (int)(((float)this->GetHp() / (float)this->GetMaxHp()) * 100.0) << "%" << " "<< this->GetHp() << "/" << this->GetMaxHp();
+	cout << std::setw(15) << "Zdrowie:" << std::setw(3) << (int)(((float)this->GetHp() / (float)this->GetMaxHp()) * 100.0) << "%" << std::setw(5) << " " << this->GetHp() << "/" << this->GetMaxHp();
 
 	gotoxy(0, map_height + 4);
 	ChangeColor(1);
@@ -85,7 +86,7 @@ void Hero::DrawHpManaBar(int map_height)
 	for (i; i <= 50; i++)
 		cout << " ";
 	ChangeColor(7);
-	cout << "     Mana:          " << (int)(((float)this->GetMana() / (float)this->GetMaxMana()) * 100.0) << "%" << " " << this->GetMana() << "/" << this->GetMaxMana();
+	cout << std::setw(15) << "Mana:" << std::setw(3) << (int)(((float)this->GetMana() / (float)this->GetMaxMana()) * 100.0) << "%" << std::setw(5) << " " << this->GetMana() << "/" << this->GetMaxMana();
 
 	gotoxy(0, map_height + 5);
 	ChangeColor(6);
@@ -97,7 +98,7 @@ void Hero::DrawHpManaBar(int map_height)
 	for (i; i <= 50; i++)
 		cout << " ";
 	ChangeColor(7);
-	cout << "     Doswiadczenie: " << (int)(((float)this->GetActualExperience() / (float)this->GetNextLevelExperience()) * 100.0) << "%" << " " << this->GetActualExperience() << "/" << this->GetNextLevelExperience();
+	cout << std::setw(15) << "Doswiadczenie:" << std::setw(3) << (int)(((float)this->GetActualExperience() / (float)this->GetNextLevelExperience()) * 100.0) << "%" << std::setw(5) << " " << this->GetActualExperience() << "/" << this->GetNextLevelExperience();
 }
 
 void Hero::CheckMove(class Map & map)
@@ -272,49 +273,50 @@ void Hero::RecalculateHeroStatsWithItems()
 
 void Hero::ShowHeroStats()
 {
+	resetiosflags(5);
 	system("cls");
 	ChangeColor(10);
-	cout << "Max hp.: " << whole_max_hp;
+	cout << setw(15) << "Max hp.: " << whole_max_hp;
 	ChangeColor(14);
 	cout << "(" << basic_max_hp << ")" << endl;
 	
 	ChangeColor(10);
-	cout << "Max mana: " << whole_max_mana;
+	cout << setw(15) << "Max mana: " << whole_max_mana;
 	ChangeColor(14);
 	cout << "(" << basic_max_mana << ")" << endl;
 	
 	ChangeColor(10);
-	cout << "Sila: " << whole_strength;
+	cout << setw(15) << "Sila: " << whole_strength;
 	ChangeColor(14);
 	cout << "(" << basic_strength << ")" << endl;
 
 	ChangeColor(10);
-	cout << "Zrecznosc: " << whole_dexterity;
+	cout << setw(15) << "Zrecznosc: " << whole_dexterity;
 	ChangeColor(14);
 	cout << "(" << basic_dexterity << ")" << endl;
 
 	ChangeColor(10);
-	cout << "Intelekt: " << whole_intelligence;
+	cout << setw(15) << "Intelekt: " << whole_intelligence;
 	ChangeColor(14);
 	cout << "(" << basic_intelligence << ")" << endl;
 	
 	ChangeColor(10);
-	cout << "Atak: " << whole_attack_damage;
+	cout << setw(15) << "Atak: " << whole_attack_damage;
 	ChangeColor(14);
 	cout << "(" << basic_attack_damage << ")" << endl;
 	
 	ChangeColor(10);
-	cout << "Obrona: " << whole_defence;
+	cout << setw(15) << "Obrona: " << whole_defence;
 	ChangeColor(14);
 	cout << "(" << basic_defence << ")" << endl;
 	
 	ChangeColor(10);
-	cout << "Cios krytyczny: " << whole_critical_hit_chance;
+	cout << setw(15) << "Cios krytyczny: " << whole_critical_hit_chance;
 	ChangeColor(14);
 	cout << "(" << basic_critical_hit_chance << ")" << endl;
 
 	ChangeColor(10);
-	cout << "Przebicie pancerza: " << whole_piercing_hit_chance;
+	cout << setw(15) << "Przebicie pancerza: " << whole_piercing_hit_chance;
 	ChangeColor(14);
 	cout << "(" << basic_piercing_hit_chance << ")" << endl;
 

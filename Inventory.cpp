@@ -57,85 +57,35 @@ bool Inventory::HasFreeSlots()
 void Inventory::ShowInventory(Hero* & hero)
 {
 	std::system("cls");
+	vector<Item*>::iterator item_iterator;
 
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	bool close_eq = false;
-	vector<Item*>::iterator item_iterator = items.begin();
-	for(int i = 1; i < selected; i++)
-		item_iterator++;
+	while(true)
+	{ 
+		vector<string> names;
 
-	while (!close_eq)
-	{
-		int item_count = 1;
-		gotoxy(left_margin, top_margin);
-		ChangeColor(15);
 		for (vector<Item*>::iterator i = items.begin(); i != items.end(); i++)
 		{
-			if (item_count != selected)
-			{
-				cout << item_count << ". " << (*i)->name << endl;
-			}
-			else
-			{
-				//SetConsoleTextAttribute(hOut, 0x0070);
-				ChangeColor(112);
-				cout << item_count << ". " << (*i)->name << endl;
-				ChangeColor(15);
-			}
-			gotoxy(left_margin, top_margin + item_count);
-			item_count++;
+			names.push_back((*i)->GetName());
 		}
-		cout << endl << endl; for (int i = 1; i <= left_margin; i++) cout << " "; cout << "Wolne miejsca: " << max_capacity - item_count + 1 << ".";
-		cout << endl;         for (int i = 1; i <= left_margin; i++) cout << " "; cout << "ESC aby wyjsc.";
 
-		switch (_getch())
+		int temp_selected = DisplayListMenu(left_margin, top_margin, names, selected);
+
+		if (temp_selected == -999)
+			break;
+		else
+			selected = temp_selected;
+				
+		item_iterator = items.begin();
+		for (int i = 1; i < selected; i++)
+			item_iterator++;
+
+		if (items.size() > 0)
 		{
-			case 72:
+			ShowItemMenu(this->items.at(selected - 1), item_iterator, hero);
+			if (item_iterator == items.end())
 			{
-				if (selected >= 2)
-				{
-					selected--;
-					item_iterator--;
-				}
-				else
-				{
-					selected = item_count - 1;
-					item_iterator = --items.end();
-				}
-				break;
-			}
-			case 80:
-			{
-				if (selected + 1 < item_count)
-				{
-					selected++;
-					item_iterator++;
-				}
-				else
-				{
-					selected = 1;
-					item_iterator = items.begin();
-				}
-				break;
-			}
-			case 27:
-			{
-				close_eq = true;
-				break;
-			}
-			case 13:
-			{
-				if (items.size() > 0)
-				{
-					ShowItemMenu(this->items.at(selected - 1), item_iterator, hero);
-					if (item_iterator == items.end())
-					{
-						item_iterator = --items.end();
-						selected = item_count - 2;
-					}
-						
-				}
-				break;
+				item_iterator = --items.end();
+				selected = names.size() - 1;
 			}
 		}
 	}
