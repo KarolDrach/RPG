@@ -57,13 +57,13 @@ bool Inventory::HasFreeSlots()
 void Inventory::ShowInventory(Hero* & hero)
 {
 	std::system("cls");
-	vector<Item*>::iterator item_iterator;
+	vector<class Item*>::iterator item_iterator;
 
 	while(true)
 	{ 
 		vector<string> names;
 
-		for (vector<Item*>::iterator i = items.begin(); i != items.end(); i++)
+		for (vector<class Item*>::iterator i = items.begin(); i != items.end(); i++)
 		{
 			names.push_back((*i)->GetName());
 		}
