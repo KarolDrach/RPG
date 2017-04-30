@@ -87,16 +87,16 @@ void Inventory::ShowInventory(Hero* & hero)
 				item_iterator = --items.end();
 				selected = names.size() - 1;
 			}
+			ClearScreenFromXY(left_margin, top_margin, 85, 25);
 		}
 	}
 
 	std:system("cls");
 }
 
-void Inventory::ShowItemMenu(Item* & item, vector<Item*>::iterator &item_iterator, Hero* & hero)
+void Inventory::ShowItemMenu(Item* & item, vector<Item*>::iterator & item_iterator, Hero* & hero)
 {
-	HANDLE hOut;
-	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	gotoxy(left_margin + 20, top_margin);
 	cout << item->name;
@@ -104,98 +104,35 @@ void Inventory::ShowItemMenu(Item* & item, vector<Item*>::iterator &item_iterato
 	cout << item->description;
 	cout << endl << endl;
 	gotoxy(left_margin + 20, top_margin + 3);
-	int it = 1;
+	int line_count = 1;
 	for (vector<Bonus<>>::iterator i = (item->bonuses).begin(); i != (item->bonuses).end(); i++)
 	{
 		cout << (*i).text << (*i).value;
-		gotoxy(left_margin + 20, top_margin + 3 + it);
-		it++;
+		gotoxy(left_margin + 20, top_margin + 3 + line_count);
+		line_count++;
 	}
 
-	int selected = 1, options_amount = 0;
+	int selected = 1;
 	int pos_menu_left = left_margin + 20,
 		pos_menu_top = top_margin + 4 + (int)item->description.length() / 40 + (int)item->bonuses.capacity();
 
 	vector<ItemOption> options_list;
 
 	if (item->type == CONSUMABLE)
-	{
 		options_list.push_back(ItemOption(USE));
-		options_amount++;
-	}
 
 	if (item->type == RIGHTHAND || item->type == LEFTHAND || item->type == HEAD || item->type == ARMOR || item->type == SHOES || item->type == RING)
-	{
 		options_list.push_back(ItemOption(EQUIP));
-		options_amount++;
-	}
-
+	
 	options_list.push_back(ItemOption(DESTROY));
-	options_amount++;
 
-	bool quit = false;
+	vector<string> option_textes_list;
+	for (vector<ItemOption>::iterator i = options_list.begin(); i != options_list.end(); i++)
+		option_textes_list.push_back((*i).text);
 
-	while (!quit)
-	{
-		int counter = 0;
-
-		for (vector<ItemOption>::iterator i = options_list.begin(); i != options_list.end(); i++)
-		{
-			gotoxy(pos_menu_left, pos_menu_top + counter);
-			if (counter + 1 == selected)
-			{
-				ChangeColor(112);
-				cout << (*i).text;
-				ChangeColor(15);
-			}
-			else
-			{
-				cout << (*i).text;
-			}
-			counter++;
-		}
-
-		switch (_getch())
-		{
-			case 72:
-			{
-				if (selected >= 2)
-				{
-					selected--;
-				}
-				else
-				{
-					selected = options_amount;
-				}
-				break;
-			}
-			case 80:
-			{
-				if (selected + 1 < options_amount + 1)
-				{
-					selected++;
-				}
-				else
-				{
-					selected = 1;
-				}
-				break;
-			}
-			case 27:
-			{
-				quit = true;
-				system("cls");
-				break;
-			}
-			case 13:
-			{
-				UseOption(options_list.at(selected - 1).id, item_iterator, item, hero);  
-				quit = true;
-				system("cls");
-				break;
-			}
-		}
-	}
+	int selected_option = DisplayListMenu(pos_menu_left, pos_menu_top, option_textes_list);
+	if (selected_option != -999)
+		UseOption(options_list.at(selected_option - 1).id, item_iterator, item, hero);
 }
 
 void Inventory::UseOption(ITEM_OPTION option, vector<Item*>::iterator & item_iterator, Item* & item, Hero* & hero)
