@@ -16,7 +16,7 @@ protected:
 	vector<class Bonus<>> bonuses;
 public:
 	Item(const class Item* item);
-	Item(string name, string description, ITEM_TYPE type, vector<class Bonus<>> bonuses);
+	Item(string name, string description, ITEM_TYPE type, vector<class Bonus<>> bonuses = vector<class Bonus<>>(0));
 	vector<class Bonus<>>& GetBonusesVector() { return bonuses; }
 	string GetName() { return name; }
 	string GetDescription() { return description; }
@@ -34,9 +34,8 @@ public:
 	virtual void ActivateEffect(class Hero* _hero);
 	Meat(string name = "Mieso",
 		 string description = "Przywraca 15 hp.",
-		 ITEM_TYPE type = CONSUMABLE,
-		 vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-		 Item(name, description, type, bonuses) {};
+		 ITEM_TYPE type = CONSUMABLE) :
+		 Item(name, description, type) {};
 };
 
 class ManaMixture : public Item
@@ -46,9 +45,8 @@ public:
 	virtual void ActivateEffect(class Hero* _hero);
 	ManaMixture(string name = "Mikstura many", 
 				string description = "Przywraca 15 many.", 
-				ITEM_TYPE type = CONSUMABLE, 
-				vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-				Item(name, description, type, bonuses) {};
+				ITEM_TYPE type = CONSUMABLE) :
+				Item(name, description, type) {};
 };
 
 class LeatherArmor : public Item
@@ -58,9 +56,8 @@ class LeatherArmor : public Item
 public:
 	LeatherArmor(string name = "Skorzana zbroja", 
 				 string description = "Prosta, skorzana zbroja.", 
-				 ITEM_TYPE type = ARMOR, 
-				 vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-				 Item(name, description, type, bonuses) { InitBonuses(); };
+				 ITEM_TYPE type = ARMOR) :
+				 Item(name, description, type) { InitBonuses(); };
 };
 
 class LeatherShoes : public Item
@@ -70,9 +67,8 @@ class LeatherShoes : public Item
 public:
 	LeatherShoes(string name = "Skorzane buty", 
 				 string description = "Solidne, skorzane buty.", 
-				 ITEM_TYPE type = SHOES, 
-				 vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-				 Item(name, description, type, bonuses) { InitBonuses(); };
+				 ITEM_TYPE type = SHOES) :
+				 Item(name, description, type) { InitBonuses(); };
 };
 
 class LeatherHelmet : public Item
@@ -82,9 +78,8 @@ class LeatherHelmet : public Item
 public:
 	LeatherHelmet(string name = "Skorzany helm", 
 				  string description = "Wygodny helm z cielecej skory.", 
-				  ITEM_TYPE type = HEAD, 
-				  vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-				  Item(name, description, type, bonuses) { InitBonuses(); };
+				  ITEM_TYPE type = HEAD) :
+				  Item(name, description, type) { InitBonuses(); };
 };
 
 class Sword : public Item
@@ -94,9 +89,8 @@ class Sword : public Item
 public:
 	Sword(string name = "Miecz", 
 		  string description = "Zwykly miecz.", 
-		  ITEM_TYPE type = RIGHTHAND, 
-		  vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-		  Item(name, description, type, bonuses) { InitBonuses(); };
+		  ITEM_TYPE type = RIGHTHAND) :
+		  Item(name, description, type) { InitBonuses(); };
 };
 
 class SimpleShield : public Item
@@ -106,9 +100,8 @@ class SimpleShield : public Item
 public:
 	SimpleShield(string name = "Prosta tarcza", 
 				 string description = "Zwykla tarcza.", 
-				 ITEM_TYPE type = LEFTHAND, 
-				 vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-				 Item(name, description, type, bonuses) { InitBonuses(); };
+				 ITEM_TYPE type = LEFTHAND) :
+				 Item(name, description, type) { InitBonuses(); };
 };
 
 class GoldRing : public Item
@@ -118,9 +111,6 @@ class GoldRing : public Item
 public:
 	GoldRing(string name = "Zloty pierscien",
 		string description = "Pierscien z drogiego kruszcu. Moze byc sprzedany za wysoka cene.",
-		ITEM_TYPE type = RING,
-		vector<class Bonus<>> bonuses = vector<class Bonus<>>(0)) :
-		Item(name, description, type, bonuses) {
-		InitBonuses();
-	};
+		ITEM_TYPE type = RING) :
+		Item(name, description, type) { InitBonuses(); };
 };

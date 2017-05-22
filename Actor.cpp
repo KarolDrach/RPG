@@ -216,7 +216,7 @@ void Actor::LevelUp()
 	this->basic_strength += temp_strength_add;
 	this->basic_dexterity += temp_dext_add;
 	this->basic_intelligence += temp_int_add;
-	this->skill_points_to_distribute -= (temp_strength_add + temp_dext_add + temp_int_add);
+	this->stat_points_to_distribute -= (temp_strength_add + temp_dext_add + temp_int_add);
 	system("cls");
 	ChangeColor(15);
 }
@@ -224,6 +224,7 @@ void Actor::LevelUp()
 void Actor::StandardAttack(class Actor * enemy)
 {
 	bool critical = false;
+	bool piercing = true;
 	int hit = this->whole_attack_damage;  // THIS IS BASIC VALUE OF HIT
 	int pure_hit;						  // THIS IS PURE VALUE OF HIT, AFTER CALCULATING ATTACKER'S BONUSES LIKE CRITICAL ETC., BUT BEFORE CALCULATING DEFENSE OF HIT TAKER
 	
@@ -235,10 +236,13 @@ void Actor::StandardAttack(class Actor * enemy)
 	}
 
 	pure_hit = hit;
-	// SUBSTRACTING DEFENCE
-	hit -= enemy->whole_defence;
-
-	//
+	// SUBSTRACTING DEFENCE WHEN NOT PIERCING HIT
+	if (!(rand() % 100 < this->whole_piercing_hit_chance))
+	{
+		hit -= enemy->whole_defence;
+		piercing = false;
+	}
+		
 	if (hit < 0)
 		hit = 0;
 
@@ -250,8 +254,9 @@ void Actor::StandardAttack(class Actor * enemy)
 		ChangeColor(1);
 
 	cout << this->GetName() << " atakuje z sila +" << pure_hit << endl;
-	if (critical) cout << "Cios krytyczny! " << endl;
-	cout << enemy->GetName() << " otrzymuje " << hit << " obrazen, pozostalo " << "(" << (int)(((float)enemy->GetHp() / (float)enemy->GetMaxHp()) * 100.0) << "%)" << endl << endl;
+	if (critical) cout << "- Cios krytyczny! " << endl;
+	if (piercing) cout << "- Przeszywajacy cios!" << endl;
+	cout << enemy->GetName() << " otrzymuje " << hit << " obrazen, pozostalo " << "(" << (int)(((float)enemy->GetHp() / (float)enemy->GetMaxHp()) * 100.0) << "%) HP." << endl << endl;
 	ChangeColor(15);
 }
 

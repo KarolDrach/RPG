@@ -16,9 +16,6 @@ using namespace std;
 
 void main()
 {
-	/*LevelCaps caps;
-	caps.InitLevelCaps();*/
-
 	Game GAME;
 
 	while (GAME.GetPlaying())

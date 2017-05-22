@@ -41,15 +41,6 @@ void Mob::Clr()
 	WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), &symbol, 1, 0, 0);
 }
 
-//void Mob::StandardAttack(Hero* enemy)
-//{
-//	int hit = this->basic_attack_damage - enemy->GetBasicDefence();
-//	ChangeColor(4);
-//	enemy->hp -= hit;
-//	cout << "Otrzymano " << hit << " obrazen(" << (int)(((float)enemy->GetHp() / (float)enemy->GetMaxHp()) * 100.0) << "%)" << endl;
-//	ChangeColor(7);
-//}
-
 void Rat::InitPossibleLoots()
 {
 	this->possible_loots.push_back(class Loot(new class Meat, 100));

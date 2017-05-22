@@ -12,7 +12,7 @@ protected:
 	Bonus_value_type value;
 	string text;
 public:
-	Bonus(BONUS_TYPE type = NO_BONUS, Bonus_value_type value = (Bonus_value_type)0)
+	Bonus(BONUS_TYPE type = NO_BONUS, Bonus_value_type value = static_cast<Bonus_value_type>(0))
 	{
 		this->type = type;
 		this->value = value;

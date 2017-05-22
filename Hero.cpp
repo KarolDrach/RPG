@@ -27,7 +27,7 @@ Hero::Hero(int pos_x, int pos_y, int level, string name)
 	DIR = UP;
 	hp = basic_max_hp;
 	mana = basic_max_mana;
-	basic_attack_damage = 10 + level * 2;// +2000;
+	basic_attack_damage = 10 + level * 2;
 	basic_defence = 5 + level;
 	basic_critical_hit_chance = 2 + level + 150;
 
@@ -61,7 +61,6 @@ void Hero::DrawHpManaBar(int map_height)
 {
 	gotoxy(0, map_height + 1);
 	cout << this->GetName() << "(" << this->GetLevel() << ")";
-
 	gotoxy(0, map_height + 3);
 	int i = 1;
 	ChangeColor(12);
@@ -251,10 +250,12 @@ void Hero::RecalculateHeroStatsWithItems()
 				case ADD_CRITICAL_HIT_CHANCE:
 				{
 					additional_critical_hit_chance += (*j).GetValueOfType();
+					break;
 				}
 				case ADD_PIERCING_HIT_CHANCE:
 				{
 					additional_piercing_hit_chance += (*j).GetValueOfType();
+					break;
 				}
 			}
 		}
@@ -387,24 +388,6 @@ HERO_ACT Hero::CheckAction()
 	}
 	return NONE;
 }
-
-//void Warrior::StandardAttack(Mob* enemy)
-//{
-//	bool critical = false;
-//	int hit = this->whole_attack_damage - enemy->defence;
-//
-//	if (rand() % 100 < this->whole_critical_hit_chance)
-//	{
-//		critical = true;
-//		hit = hit*2;
-//	}
-//	enemy->hp -= hit;
-//	ChangeColor(2);
-//	cout << "Atakujesz z sila +" << whole_attack_damage << endl;
-//	if (critical) cout << "Cios krytyczny! " << endl;
-//	cout << enemy->GetName() << " otrzymuje " << hit << " obrazen, pozostalo " << "(" << (int)(((float)enemy->GetHp() / (float)enemy->GetMaxHp()) * 100.0) << "%)" << endl << endl;
-//	ChangeColor(15);
-//}
 
 vector<class Mob*>::iterator Hero::TryAttack(vector <class Mob*>& monsters, int & number)
 {

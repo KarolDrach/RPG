@@ -26,7 +26,6 @@ public:
 	friend class Map;
 	virtual void InitPossibleLoots() = 0;
 	virtual void test() {};
-	//virtual void StandardAttack(Actor* enemy);
 	Mob(int pos_x, int pos_y, int level, int whole_max_hp, int whole_max_mana, int whole_strength, int whole_attack_damage, int whole_defence, int whole_critical_hit_chance, string name, MOB_ID id,
 		char map_symbol);
 	~Mob();
